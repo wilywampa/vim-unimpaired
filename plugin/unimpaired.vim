@@ -219,8 +219,9 @@ nnoremap cod :<C-R>=&diff ? 'diffoff' : 'diffthis'<CR><CR>
 call s:option_map('h', 'hlsearch')
 call s:option_map('i', 'ignorecase')
 call s:option_map('l', 'list')
+call s:option_map('m', 'modifiable')
 call s:option_map('n', 'number')
-call s:option_map('r', 'relativenumber')
+call s:option_map('r', 'readonly')
 call s:option_map('s', 'spell')
 call s:option_map('w', 'wrap')
 nnoremap [ox :set cursorline cursorcolumn<CR>
