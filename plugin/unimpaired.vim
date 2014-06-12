@@ -161,8 +161,26 @@ endfunction
 nnoremap <silent> <Plug>unimpairedBlankUp   :<C-U>call <SID>BlankUp(v:count1)<CR>
 nnoremap <silent> <Plug>unimpairedBlankDown :<C-U>call <SID>BlankDown(v:count1)<CR>
 
-nmap [<Space> <Plug>unimpairedBlankUp
-nmap ]<Space> <Plug>unimpairedBlankDown
+function! s:DelLineUp(count) abort
+  execute "-".a:count.",-d"
+  silent! call repeat#set("\<Plug>unimpairedDelLineUp", a:count)
+endfunction
+
+function! s:DelLineDown(count) abort
+  execute "+,+".a:count."d"
+  '[-1
+  silent! call repeat#set("\<Plug>unimpairedDelLineDown", a:count)
+endfunction
+
+nnoremap <silent> <Plug>unimpairedDelLineUp   :<C-U>call <SID>DelLineUp(v:count1)<CR>
+nnoremap <silent> <Plug>unimpairedDelLineDown :<C-U>call <SID>DelLineDown(v:count1)<CR>
+
+nmap [<Space>   <Plug>unimpairedBlankUp
+nmap ]<Space>   <Plug>unimpairedBlankDown
+nmap [<C-Space> <Plug>unimpairedDelLineUp
+nmap ]<C-Space> <Plug>unimpairedDelLineDown
+nmap [<Nul>     <Plug>unimpairedDelLineUp
+nmap ]<Nul>     <Plug>unimpairedDelLineDown
 
 function! s:Move(cmd, count, map) abort
   normal! m`
