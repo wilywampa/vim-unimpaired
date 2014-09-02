@@ -287,7 +287,7 @@ function! s:putline(how, map) abort
   call setreg("+", body, type)
   call setreg("*", body, type)
   if type !=# 'V'
-    call repeat#set("\<Plug>unimpairedPut".a:map)
+    silent! call repeat#set("\<Plug>unimpairedPut".a:map)
   endif
 endfunction
 
