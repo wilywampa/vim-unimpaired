@@ -233,12 +233,16 @@ call s:option_map('c', 'cursorline')
 call s:option_map('u', 'cursorcolumn')
 nnoremap [od :diffthis<CR>
 nnoremap ]od :diffoff<CR>
-nnoremap cod :<C-R>=&diff ? 'diffoff' : 'diffthis'<CR><CR>
+nnoremap cod :<C-R>=&diff ?
+    \ "windo execute &buftype == '' ? 'diffoff' : ''" :
+    \ "windo execute &buftype == '' ? 'diffthis' : ''"
+    \ ." \| ".winnr('#')."wincmd w \| ".winnr()."wincmd w"<CR><CR>
+call s:option_map('f', 'startofline')
 call s:option_map('h', 'hlsearch')
 call s:option_map('i', 'ignorecase')
 call s:option_map('l', 'list')
 call s:option_map('m', 'modifiable')
-call s:option_map('n', 'number')
+call s:option_map('n', 'relativenumber')
 call s:option_map('r', 'readonly')
 call s:option_map('s', 'spell')
 call s:option_map('w', 'wrap')
@@ -277,9 +281,11 @@ augroup END
 
 function! s:putline(how, map) abort
   let [body, type] = [getreg(v:register), getregtype(v:register)]
-  call setreg(v:register, body, 'l')
+  call setreg("+", body, 'l')
+  call setreg("*", body, 'l')
   exe 'normal! "'.v:register.a:how
-  call setreg(v:register, body, type)
+  call setreg("+", body, type)
+  call setreg("*", body, type)
   if type !=# 'V'
     call repeat#set("\<Plug>unimpairedPut".a:map)
   endif
@@ -290,12 +296,18 @@ nnoremap <silent> <Plug>unimpairedPutBelow :call <SID>putline(']p', 'Below')<CR>
 
 nmap [p <Plug>unimpairedPutAbove
 nmap ]p <Plug>unimpairedPutBelow
-nnoremap <silent> >P :call <SID>putline('[p', 'Above')<CR>>']
-nnoremap <silent> >p :call <SID>putline(']p', 'Below')<CR>>']
-nnoremap <silent> <P :call <SID>putline('[p', 'Above')<CR><']
-nnoremap <silent> <p :call <SID>putline(']p', 'Below')<CR><']
-nnoremap <silent> =P :call <SID>putline('[p', 'Above')<CR>=']
-nnoremap <silent> =p :call <SID>putline(']p', 'Below')<CR>=']
+nnoremap <silent> >P :call <SID>putline('[p', 'Above')<CR>>']:call repeat#set(">P")<CR>
+nnoremap <silent> >p :call <SID>putline(']p', 'Below')<CR>>']:call repeat#set(">p")<CR>
+nnoremap <silent> <P :call <SID>putline('[p', 'Above')<CR><']:call repeat#set("<P")<CR>
+nnoremap <silent> <p :call <SID>putline(']p', 'Below')<CR><']:call repeat#set("<p")<CR>
+nnoremap <silent> =P :call <SID>putline('[p', 'Above')<CR>=']:call repeat#set("=P")<CR>
+nnoremap <silent> =p :call <SID>putline(']p', 'Below')<CR>=']:call repeat#set("=p")<CR>
+nnoremap <silent> >gP :call <SID>putline('[p', 'Above')<CR>>']']:call repeat#set(">gP")<CR>
+nnoremap <silent> >gp :call <SID>putline(']p', 'Below')<CR>>']']:call repeat#set(">gp")<CR>
+nnoremap <silent> <gP :call <SID>putline('[p', 'Above')<CR><']']:call repeat#set("<gP")<CR>
+nnoremap <silent> <gp :call <SID>putline(']p', 'Below')<CR><']']:call repeat#set("<gp")<CR>
+nnoremap <silent> =gP :call <SID>putline('[p', 'Above')<CR>=']']:call repeat#set("=gP")<CR>
+nnoremap <silent> =gp :call <SID>putline(']p', 'Below')<CR>=']']:call repeat#set("=gp")<CR>
 
 " }}}1
 " Encoding and decoding {{{1
