@@ -233,10 +233,11 @@ call s:option_map('c', 'cursorline')
 call s:option_map('u', 'cursorcolumn')
 nnoremap [od :diffthis<CR>
 nnoremap ]od :diffoff<CR>
-nnoremap cod :<C-R>=&diff ?
+nnoremap <silent> cod :<C-R>=&diff ?
     \ "windo execute &buftype == '' ? 'diffoff' : ''" :
     \ "windo execute &buftype == '' ? 'diffthis' : ''"
-    \ ." \| ".winnr('#')."wincmd w \| ".winnr()."wincmd w"<CR><CR>
+    \ ." \| ".winnr('#')."wincmd w \| ".winnr()."wincmd w"<CR><CR>:echo
+    \ <C-r>=&diff ? '":diffthis"' : '":diffoff"'<CR><CR>
 call s:option_map('f', 'startofline')
 call s:option_map('h', 'hlsearch')
 call s:option_map('i', 'ignorecase')
