@@ -229,7 +229,6 @@ endfunction
 nnoremap [ob :set background=light<CR>
 nnoremap ]ob :set background=dark<CR>
 nnoremap cob :set background=<C-R>=&background == 'dark' ? 'light' : 'dark'<CR><CR>
-call s:option_map('c', 'cursorline')
 call s:option_map('u', 'cursorcolumn')
 nnoremap [od :diffthis<CR>
 nnoremap ]od :diffoff<CR>
@@ -253,6 +252,10 @@ nnoremap cox :set <C-R>=&cursorline && &cursorcolumn ? 'nocursorline nocursorcol
 nnoremap [ov :set virtualedit+=all<CR>
 nnoremap ]ov :set virtualedit-=all<CR>
 nnoremap cov :set <C-R>=(&virtualedit =~# "all") ? 'virtualedit-=all' : 'virtualedit+=all'<CR><CR>
+nnoremap <expr> [oc ':set colorcolumn='.(&textwidth ? &textwidth : 80).'<CR>'
+nnoremap ]oc :set colorcolumn=<CR>
+nnoremap <expr> coc &colorcolumn ? ':set colorcolumn=<CR>' :
+    \ (':set colorcolumn='.(&textwidth ? &textwidth : 80).'<CR>')
 
 function! s:setup_paste() abort
   let s:paste = &paste
