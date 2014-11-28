@@ -244,7 +244,6 @@ call s:option_map('l', 'list')
 call s:option_map('m', 'modifiable')
 call s:option_map('n', 'relativenumber')
 call s:option_map('r', 'readonly')
-call s:option_map('s', 'spell')
 call s:option_map('w', 'wrap')
 nnoremap [ox :set cursorline cursorcolumn<CR>
 nnoremap ]ox :set nocursorline nocursorcolumn<CR>
@@ -256,6 +255,9 @@ nnoremap <expr> [oc ':set colorcolumn='.(&textwidth ? &textwidth : 80).'<CR>'
 nnoremap ]oc :set colorcolumn=<CR>
 nnoremap <expr> coc &colorcolumn ? ':set colorcolumn=<CR>' :
     \ (':set colorcolumn='.(&textwidth ? &textwidth : 80).'<CR>')
+nnoremap [os :setlocal spell<CR>
+nnoremap ]os :setlocal nospell<CR>
+nnoremap cos :setlocal <C-R>=&spell ? 'nospell' : 'spell'<CR><CR>
 
 function! s:setup_paste() abort
   let s:paste = &paste
