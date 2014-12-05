@@ -251,10 +251,10 @@ nnoremap cox :set <C-R>=&cursorline && &cursorcolumn ? 'nocursorline nocursorcol
 nnoremap [ov :set virtualedit+=all<CR>
 nnoremap ]ov :set virtualedit-=all<CR>
 nnoremap cov :set <C-R>=(&virtualedit =~# "all") ? 'virtualedit-=all' : 'virtualedit+=all'<CR><CR>
-nnoremap <expr> [oc ':set colorcolumn='.(&textwidth ? &textwidth : 80).'<CR>'
+nnoremap <expr> [oc ':<C-u>set colorcolumn='.(v:count ? v:count : (&textwidth ? &textwidth : 80)).'<CR>'
 nnoremap ]oc :set colorcolumn=<CR>
-nnoremap <expr> coc &colorcolumn ? ':set colorcolumn=<CR>' :
-    \ (':set colorcolumn='.(&textwidth ? &textwidth : 80).'<CR>')
+nnoremap <expr> coc &colorcolumn ? ':<C-u>set colorcolumn='.(v:count ? v:count : '').'<CR>' :
+    \ (':<C-u>set colorcolumn='.(v:count ? v:count : (&textwidth ? &textwidth : 80)).'<CR>')
 nnoremap [os :setlocal spell<CR>
 nnoremap ]os :setlocal nospell<CR>
 nnoremap cos :setlocal <C-R>=&spell ? 'nospell' : 'spell'<CR><CR>
