@@ -230,13 +230,15 @@ nnoremap [ob :set background=light<CR>
 nnoremap ]ob :set background=dark<CR>
 nnoremap cob :set background=<C-R>=&background == 'dark' ? 'light' : 'dark'<CR><CR>
 call s:option_map('u', 'cursorcolumn')
-nnoremap [od :diffthis<CR>
-nnoremap ]od :diffoff<CR>
-nnoremap <silent> cod :<C-R>=&diff ?
-    \ "windo execute &buftype == '' ? 'diffoff' : ''" :
-    \ "windo execute &buftype == '' ? 'diffthis' : ''"
-    \ ." \| ".winnr('#')."wincmd w \| ".winnr()."wincmd w"<CR><CR>:echo
-    \ <C-r>=&diff ? '":diffthis"' : '":diffoff"'<CR><CR>
+if empty(maparg('cod'))
+  nnoremap [od :diffthis<CR>
+  nnoremap ]od :diffoff<CR>
+  nnoremap <silent> cod :<C-R>=&diff ?
+      \ "windo execute &buftype == '' ? 'diffoff' : ''" :
+      \ "windo execute &buftype == '' ? 'diffthis' : ''"
+      \ ." \| ".winnr('#')."wincmd w \| ".winnr()."wincmd w"<CR><CR>:echo
+      \ <C-r>=&diff ? '":diffthis"' : '":diffoff"'<CR><CR>
+endif
 call s:option_map('f', 'startofline')
 call s:option_map('h', 'hlsearch')
 call s:option_map('i', 'ignorecase')
