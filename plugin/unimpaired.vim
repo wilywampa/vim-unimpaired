@@ -217,7 +217,7 @@ xmap ]e <Plug>unimpairedMoveSelectionDown
 " Option toggling {{{1
 
 function! s:statusbump() abort
-  let &readonly = &readonly
+  let &l:readonly = &l:readonly
   return ''
 endfunction
 
@@ -227,8 +227,8 @@ function! s:toggle(op) abort
 endfunction
 
 function! s:option_map(letter, option) abort
-  exe 'nnoremap [o'.a:letter ':set '.a:option.'<C-R>=<SID>statusbump()<CR>'
-  exe 'nnoremap ]o'.a:letter ':set no'.a:option.'<C-R>=<SID>statusbump()<CR>'
+  exe 'nnoremap [o'.a:letter ':set '.a:option.'<C-R>=<SID>statusbump()<CR><CR>'
+  exe 'nnoremap ]o'.a:letter ':set no'.a:option.'<C-R>=<SID>statusbump()<CR><CR>'
   exe 'nnoremap co'.a:letter ':set <C-R>=<SID>toggle("'.a:option.'")<CR><CR>'
 endfunction
 
