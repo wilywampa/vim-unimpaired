@@ -262,6 +262,9 @@ nnoremap cov :set <C-R>=(&virtualedit =~# "all") ? 'virtualedit-=all' : 'virtual
 nnoremap [oe :set eventignore+=all<CR>
 nnoremap ]oe :set eventignore-=all<CR>
 nnoremap coe :set <C-R>=(&eventignore =~# "all") ? 'eventignore-=all' : 'eventignore+=all'<CR><CR>
+nnoremap [oa :set nrformats+=alpha<CR>
+nnoremap ]oa :set nrformats-=alpha<CR>
+nnoremap coa :set <C-R>=(&nrformats =~# "alpha") ? 'nrformats-=alpha' : 'nrformats+=alpha'<CR><CR>
 nnoremap <expr> [oc ':<C-u>set colorcolumn='.(v:count ? v:count : (&textwidth ? &textwidth : 80)).'<CR>'
 nnoremap ]oc :set colorcolumn=<CR>
 nnoremap <expr> coc &colorcolumn ? ':<C-u>set colorcolumn='.(v:count ? v:count : '').'<CR>' :
