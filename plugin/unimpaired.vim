@@ -226,16 +226,16 @@ function! s:toggle(op) abort
   return eval('&'.a:op) ? 'no'.a:op : a:op
 endfunction
 
-function! s:option_map(letter, option) abort
-  exe 'nnoremap [o'.a:letter ':set '.a:option.'<C-R>=<SID>statusbump()<CR><CR>'
-  exe 'nnoremap ]o'.a:letter ':set no'.a:option.'<C-R>=<SID>statusbump()<CR><CR>'
-  exe 'nnoremap co'.a:letter ':set <C-R>=<SID>toggle("'.a:option.'")<CR><CR>'
+function! s:option_map(letter, option, mode) abort
+  exe 'nnoremap [o'.a:letter ':'.a:mode.' '.a:option.'<C-R>=<SID>statusbump()<CR><CR>'
+  exe 'nnoremap ]o'.a:letter ':'.a:mode.' no'.a:option.'<C-R>=<SID>statusbump()<CR><CR>'
+  exe 'nnoremap co'.a:letter ':'.a:mode.' <C-R>=<SID>toggle("'.a:option.'")<CR><CR>'
 endfunction
 
 nnoremap [ob :set background=light<CR>
 nnoremap ]ob :set background=dark<CR>
 nnoremap cob :set background=<C-R>=&background == 'dark' ? 'light' : 'dark'<CR><CR>
-call s:option_map('u', 'cursorcolumn')
+call s:option_map('u', 'cursorcolumn', 'setlocal')
 if empty(maparg('cod'))
   nnoremap [od :diffthis<CR>
   nnoremap ]od :diffoff<CR>
@@ -245,15 +245,15 @@ if empty(maparg('cod'))
       \ ." \| ".winnr('#')."wincmd w \| ".winnr()."wincmd w"<CR><CR>:echo
       \ <C-r>=&diff ? '":diffthis"' : '":diffoff"'<CR><CR>
 endif
-call s:option_map('f', 'startofline')
-call s:option_map('h', 'hlsearch')
-call s:option_map('i', 'ignorecase')
-call s:option_map('l', 'list')
-call s:option_map('m', 'modifiable')
-call s:option_map('n', 'relativenumber')
-call s:option_map('r', 'readonly')
-call s:option_map('s', 'spell')
-call s:option_map('w', 'wrap')
+call s:option_map('f', 'startofline', 'set')
+call s:option_map('h', 'hlsearch', 'set')
+call s:option_map('i', 'ignorecase', 'set')
+call s:option_map('l', 'list', 'setlocal')
+call s:option_map('m', 'modifiable', 'setlocal')
+call s:option_map('n', 'relativenumber', 'setlocal')
+call s:option_map('r', 'readonly', 'setlocal')
+call s:option_map('s', 'spell', 'setlocal')
+call s:option_map('w', 'wrap', 'setlocal')
 nnoremap [ox :set cursorline cursorcolumn<CR>
 nnoremap ]ox :set nocursorline nocursorcolumn<CR>
 nnoremap cox :set <C-R>=&cursorline && &cursorcolumn ? 'nocursorline nocursorcolumn' : 'cursorline cursorcolumn'<CR><CR>
