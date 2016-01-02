@@ -270,6 +270,10 @@ nnoremap <expr> [oc ':<C-u>set colorcolumn='.(v:count ? v:count : (&textwidth ? 
 nnoremap ]oc :set colorcolumn=<CR>
 nnoremap <expr> coc &colorcolumn ? ':<C-u>set colorcolumn='.(v:count ? v:count : '').'<CR>' :
     \ (':<C-u>set colorcolumn='.(v:count ? v:count : (&textwidth ? &textwidth : 80)).'<CR>')
+nnoremap <expr> [oz ':<C-u>set conceallevel='.(v:count ? v:count : 2).'<CR>'
+nnoremap ]oz :set conceallevel=0<CR>
+nnoremap <expr> coz &conceallevel ? ':<C-u>set conceallevel='.(v:count ? v:count : '0').'<CR>' :
+    \ (':<C-u>set conceallevel='.(v:count ? v:count : 2).'<CR>')
 
 function! s:setup_paste() abort
   let s:paste = &paste
