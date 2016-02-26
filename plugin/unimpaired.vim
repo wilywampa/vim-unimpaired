@@ -328,12 +328,6 @@ nnoremap <silent> <P  :call <SID>putline('Above')<CR><']:call repeat#set("<P")<C
 nnoremap <silent> <p  :call <SID>putline('Below')<CR><']:call repeat#set("<p")<CR>
 nnoremap <silent> =P  :call <SID>putline('Above')<CR>=']:call repeat#set("=P")<CR>
 nnoremap <silent> =p  :call <SID>putline('Below')<CR>=']:call repeat#set("=p")<CR>
-nnoremap <silent> >gP :call <SID>putline('Above')<CR>>']']:call repeat#set(">gP")<CR>
-nnoremap <silent> >gp :call <SID>putline('Below')<CR>>']']:call repeat#set(">gp")<CR>
-nnoremap <silent> <gP :call <SID>putline('Above')<CR><']']:call repeat#set("<gP")<CR>
-nnoremap <silent> <gp :call <SID>putline('Below')<CR><']']:call repeat#set("<gp")<CR>
-nnoremap <silent> =gP :call <SID>putline('Above')<CR>=']']:call repeat#set("=gP")<CR>
-nnoremap <silent> =gp :call <SID>putline('Below')<CR>=']']:call repeat#set("=gp")<CR>
 
 " }}}1
 " Encoding and decoding {{{1
