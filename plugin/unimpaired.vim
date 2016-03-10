@@ -274,6 +274,9 @@ nnoremap <expr> [oz ':<C-u>set conceallevel='.(v:count ? v:count : 2).'<CR>'
 nnoremap ]oz :set conceallevel=0<CR>
 nnoremap <expr> coz &conceallevel ? ':<C-u>set conceallevel='.(v:count ? v:count : '0').'<CR>' :
     \ (':<C-u>set conceallevel='.(v:count ? v:count : 2).'<CR>')
+nnoremap [oW :set diffopt+=iwhite<CR>
+nnoremap ]oW :set diffopt-=iwhite<CR>
+nnoremap coW :set <C-R>=(&diffopt =~# "iwhite") ? 'diffopt-=iwhite' : 'diffopt+=iwhite'<CR><CR>
 
 function! s:setup_paste() abort
   let s:paste = &paste
