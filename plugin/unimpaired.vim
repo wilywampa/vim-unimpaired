@@ -255,11 +255,17 @@ endfunction
 call s:map('n', '[ob', ':set background=light<CR>')
 call s:map('n', ']ob', ':set background=dark<CR>')
 call s:map('n', '=ob', ':set background=<C-R>=&background == "dark" ? "light" : "dark"<CR><CR>')
-call s:option_map('c', 'cursorline', 'setlocal')
 call s:option_map('u', 'cursorcolumn', 'setlocal')
-call s:map('n', '[od', ':diffthis<CR>')
-call s:map('n', ']od', ':diffoff<CR>')
-call s:map('n', '=od', ':<C-R>=&diff ? "diffoff" : "diffthis"<CR><CR>')
+if empty(maparg('cod'))
+  call s:map('n', '[od', ':diffthis<CR>')
+  call s:map('n', ']od', ':diffoff<CR>')
+  nnoremap <silent> cod :<C-R>=&diff ?
+      \ "windo execute &buftype == '' ? 'diffoff' : ''" :
+      \ "windo execute &buftype == '' ? 'diffthis' : ''"
+      \ ." \| ".winnr('#')."wincmd w \| ".winnr()."wincmd w"<CR><CR>:echo
+      \ <C-r>=&diff ? '":diffthis"' : '":diffoff"'<CR><CR>
+endif
+call s:option_map('f', 'startofline', 'set')
 call s:option_map('h', 'hlsearch', 'set')
 call s:option_map('i', 'ignorecase', 'set')
 call s:option_map('l', 'list', 'setlocal')
@@ -268,15 +274,30 @@ call s:option_map('n', 'relativenumber', 'setlocal')
 call s:option_map('r', 'readonly', 'setlocal')
 call s:option_map('s', 'spell', 'setlocal')
 call s:option_map('w', 'wrap', 'setlocal')
-call s:map('n', '[ov', ':set virtualedit+=all<CR>')
-call s:map('n', ']ov', ':set virtualedit-=all<CR>')
-call s:map('n', '=ov', ':set <C-R>=(&virtualedit =~# "all") ? "virtualedit-=all" : "virtualedit+=all"<CR><CR>')
 call s:map('n', '[ox', ':set cursorline cursorcolumn<CR>')
 call s:map('n', ']ox', ':set nocursorline nocursorcolumn<CR>')
-call s:map('n', '=ox', ':set <C-R>=<SID>cursor_options()<CR><CR>')
-if empty(maparg('co', 'n'))
-  nmap co =o
-endif
+call s:map('n', 'cox', ':set <C-r>=(&cursorline && &cursorcolumn) ? "nocursorline nocursorcolumn" : "cursorline cursorcolumn"<CR><CR>')
+call s:map('n', '[ov', ':set virtualedit+=all<CR>')
+call s:map('n', ']ov', ':set virtualedit-=all<CR>')
+call s:map('n', 'cov', ':set <C-R>=(&virtualedit =~# "all") ? "virtualedit-=all" : "virtualedit+=all"<CR><CR>')
+call s:map('n', '[oe', ':set eventignore+=all<CR>')
+call s:map('n', ']oe', ':set eventignore-=all<CR>')
+call s:map('n', 'coe', ':set <C-R>=(&eventignore =~# "all") ? "eventignore-=all" : "eventignore+=all"<CR><CR>')
+call s:map('n', '[oa', ':set nrformats+=alpha<CR>')
+call s:map('n', ']oa', ':set nrformats-=alpha<CR>')
+call s:map('n', 'coa', ':set <C-R>=(&nrformats =~# "alpha") ? "nrformats-=alpha" : "nrformats+=alpha"<CR><CR>')
+call s:map('n', '[oc', ':<C-u>set colorcolumn=<C-r>=(v:count ? v:count : (&textwidth ? &textwidth : 80))<CR><CR>')
+call s:map('n', ']oc', ':set colorcolumn=<CR>')
+call s:map('n', 'coc', ':<C-u>set colorcolumn=<C-r>=&colorcolumn ? '.
+    \ '(v:count ? v:count : "") : (v:count ? v:count : (&textwidth ? &textwidth : 80))<CR><CR>')
+call s:map('n', '[oz', ':<C-u>set conceallevel=<C-r>=v:count ? v:count : 2<CR><CR>')
+call s:map('n', ']oz', ':set conceallevel=0<CR>')
+call s:map('n', 'coz', ':<C-u>set conceallevel=<C-r>=&conceallevel ? '.
+    \ '(v:count ? v:count : 0) : (v:count ? v:count : 2)<CR><CR>')
+call s:map('n', '[oW', ':set diffopt+=iwhite<CR>')
+call s:map('n', ']oW', ':set diffopt-=iwhite<CR>')
+call s:map('n', 'coW', ':set <C-R>=(&diffopt =~# "iwhite") ? '.
+    \ '"diffopt-=iwhite" : "diffopt+=iwhite"<CR><CR>')
 
 function! s:setup_paste() abort
   let s:paste = &paste
