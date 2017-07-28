@@ -249,12 +249,12 @@ endfunction
 function! s:option_map(letter, option, mode) abort
   call s:map('n', '[o'.a:letter, ':'.a:mode.' '.a:option.'<C-R>=<SID>statusbump()<CR><CR>')
   call s:map('n', ']o'.a:letter, ':'.a:mode.' no'.a:option.'<C-R>=<SID>statusbump()<CR><CR>')
-  call s:map('n', '=o'.a:letter, ':'.a:mode.' <C-R>=<SID>toggle("'.a:option.'")<CR><CR>')
+  call s:map('n', 'co'.a:letter, ':'.a:mode.' <C-R>=<SID>toggle("'.a:option.'")<CR><CR>')
 endfunction
 
 call s:map('n', '[ob', ':set background=light<CR>')
 call s:map('n', ']ob', ':set background=dark<CR>')
-call s:map('n', '=ob', ':set background=<C-R>=&background == "dark" ? "light" : "dark"<CR><CR>')
+call s:map('n', 'cob', ':set background=<C-R>=&background == "dark" ? "light" : "dark"<CR><CR>')
 call s:option_map('u', 'cursorcolumn', 'setlocal')
 if empty(maparg('cod'))
   call s:map('n', '[od', ':diffthis<CR>')
