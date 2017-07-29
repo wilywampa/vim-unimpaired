@@ -325,7 +325,7 @@ call s:map('n', 'yO', ':call <SID>setup_paste()<CR>O', '<silent>')
 " }}}1
 " Put {{{1
 
-function! s:putline(how) abort
+function! s:putline(how, map) abort
   let [body, type] = [getreg(v:register), getregtype(v:register)]
   call setreg("+", body, 'l')
   call setreg("*", body, 'l')
@@ -337,12 +337,12 @@ function! s:putline(how) abort
   call setreg("+", body, type)
   call setreg("*", body, type)
   if type !=# 'V'
-    silent! call repeat#set("\<Plug>unimpairedPut".a:how)
+    silent! call repeat#set("\<Plug>unimpairedPut".a:map)
   endif
 endfunction
 
-nnoremap <silent> <Plug>unimpairedPutAbove :call <SID>putline('Above')<CR>
-nnoremap <silent> <Plug>unimpairedPutBelow :call <SID>putline('Below')<CR>
+nnoremap <silent> <Plug>unimpairedPutAbove :call <SID>putline('[p', 'Above')<CR>
+nnoremap <silent> <Plug>unimpairedPutBelow :call <SID>putline(']p', 'Below')<CR>
 
 call s:map('n', '[p', '<Plug>unimpairedPutAbove')
 call s:map('n', ']p', '<Plug>unimpairedPutBelow')
