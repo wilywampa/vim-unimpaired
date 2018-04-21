@@ -346,7 +346,7 @@ function! s:putline(how, map) abort
   let [body, type] = [getreg(v:register), getregtype(v:register)]
   call setreg("+", body, 'l')
   call setreg("*", body, 'l')
-  exe 'normal!' (a:how == 'Above' ? 'Oa' : 'oa')
+  exe 'normal!' (a:map == 'Above' ? 'Oa' : 'oa')
   let [bufnum, lnum, col, off] = getpos('.')
   exe 'normal! "'.v:register.']pk"_dd'
   call setpos("'[", [bufnum, lnum, 1, 0])
