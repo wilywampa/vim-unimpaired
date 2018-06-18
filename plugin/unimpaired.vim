@@ -32,7 +32,7 @@ function! s:maps() abort
       let tail = matchstr(head, '<[^<>]*>$\|.$') . tail
       let head = substitute(head, '<[^<>]*>$\|.$', '', '')
     endwhile
-    if head !=# '<skip>'
+    if head !=# '<skip>' && (flags !~? '<unique>' || empty(maparg(head.tail, mode)))
       exe mode.'map' flags head.tail rhs
     endif
   endfor
@@ -57,6 +57,11 @@ function! s:MapNextFamily(map,cmd) abort
     execute 'nnoremap <silent> '.map.'NFile :<C-U>exe "'.cmd.'nfile'.end
     call s:map('n', '[<C-'.toupper(a:map).'>', map.'PFile')
     call s:map('n', ']<C-'.toupper(a:map).'>', map.'NFile')
+  elseif exists(':p'.a:cmd.'next')
+    execute 'nnoremap <silent> '.map.'PPrevious :<C-U>exe "p'.cmd.'previous'.end
+    execute 'nnoremap <silent> '.map.'PNext :<C-U>exe "p'.cmd.'next'.end
+    call s:map('n', '[<C-'.toupper(a:map).'>', map.'PPrevious')
+    call s:map('n', ']<C-'.toupper(a:map).'>', map.'PNext')
   endif
 endfunction
 
@@ -330,9 +335,11 @@ endfunction
 
 if empty(maparg('co', 'n'))
   nmap <silent><expr> co <SID>legacy_option_map(nr2char(getchar()))
+  nnoremap cop <Nop>
 endif
 if empty(maparg('=o', 'n'))
   nmap <silent><expr> =o <SID>legacy_option_map(nr2char(getchar()))
+  nnoremap =op <Nop>
 endif
 
 function! s:setup_paste() abort
@@ -379,8 +386,10 @@ endfunction
 nnoremap <silent> <Plug>unimpairedPutAbove :call <SID>putline('[p', 'Above')<CR>
 nnoremap <silent> <Plug>unimpairedPutBelow :call <SID>putline(']p', 'Below')<CR>
 
-call s:map('n', '[p', '<Plug>unimpairedPutAbove')
-call s:map('n', ']p', '<Plug>unimpairedPutBelow')
+call s:map('n', '[p', '<Plug>unimpairedPutAbove', '<unique>')
+call s:map('n', ']p', '<Plug>unimpairedPutBelow', '<unique>')
+call s:map('n', '[P', '<Plug>unimpairedPutAbove')
+call s:map('n', ']P', '<Plug>unimpairedPutBelow')
 call s:map('n', '>P', ":call <SID>putline('[p', 'Above')<CR>>']", '<silent>')
 call s:map('n', '>p', ":call <SID>putline(']p', 'Below')<CR>>']", '<silent>')
 call s:map('n', '<P', ":call <SID>putline('[p', 'Above')<CR><']", '<silent>')
